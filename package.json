@@ -1,0 +1,14 @@
+{
+  "name": "pug-face",
+  "version": "1.0.0",
+  "description": "Replaces pictures of humans with pictures of pugs",
+  "main": "bundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mike Atkins",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^6.3.3"
+  }
+}
