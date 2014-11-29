@@ -72,13 +72,12 @@ function get_faces(img_url, cb) {
   }));
 }
 
-window.onload = function() {
-  var images = to_array(document.images);
+console.log('bam')
+var images = to_array(document.images);
 
-  images.forEach(function(image) {
-    get_faces(image.src, function(err, faces) {
-      if(err) { console.err(err); }
-      else { place_pug(image, faces); }
-    });
+images.forEach(function(image) {
+  get_faces(image.src, function(err, faces) {
+    if(err) { console.err(err); }
+    else { place_pug(image, faces); }
   });
-};
+});
