@@ -33,11 +33,13 @@ function place_pug(img, faces) {
       xtend(face, pick(faces, 'img_width', 'img_height'))
     );
     var pug = document.createElement('img');
+    var roll = face.attribute.pose.roll_angle.value;
     pug.style.position = 'absolute';
     pug.style.width = position.width;
     pug.style.height = position.height;
     pug.style.top = position.top;
     pug.style.left = position.left;
+    pug.style.transform = 'rotate('+roll+'deg)';
     pug.src = '/pug-face.png';
 
     div.appendChild(pug);
@@ -50,7 +52,8 @@ function get_faces(img_url, cb) {
     url: img_url,
     mode: 'normal',
     api_key: '4571281cef0e8bb9f09b51435e767d9c',
-    api_secret: 'OWwpfDvlLF1AAOGGbwSEcnkDdZrikNkL'
+    api_secret: 'OWwpfDvlLF1AAOGGbwSEcnkDdZrikNkL',
+    attribute: 'pose'
   });
 
   hyperquest.get(
