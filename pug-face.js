@@ -57,7 +57,7 @@ function get_faces(img_url, cb) {
   });
 
   hyperquest.get(
-    'http://apius.faceplusplus.com/v2/detection/detect?'+qs,
+    'https://apius.faceplusplus.com/v2/detection/detect?'+qs,
     {
       withCredentials: false
     }
