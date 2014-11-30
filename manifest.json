@@ -8,11 +8,17 @@
   "permissions": [
     "activeTab"
   ],
+  "icons": {
+    "16": "pug-face16.png",
+    "48": "pug-face48.png",
+    "128": "pug-face128.png"
+  },
   "background": {
     "scripts": ["extension.js"],
     "persistent": false
   },
   "browser_action": {
+    "default_icon": "pug-face.png",
     "default_title": "PUUUUUUUUUUUGS!!!"
   }
 }
