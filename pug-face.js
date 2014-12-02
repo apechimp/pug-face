@@ -4,7 +4,6 @@ var bl = require('bl');
 var async = require('async');
 var to_array = require('to-array');
 var xtend = require('xtend');
-var pick = require('lodash.pick');
 
 function generate_position(face) {
   var img_width = face.img_width;
@@ -23,6 +22,12 @@ function generate_position(face) {
 }
 
 function place_pug(img, faces) {
+
+  var container = img.parentNode;
+  var image_size = {
+    img_height: img.clientHeight,
+    img_width: img.clientWidth
+  };
   var div = document.createElement('div');
   div.style.position = 'relative';
   div.style.display = 'inline';
@@ -30,7 +35,7 @@ function place_pug(img, faces) {
 
   faces.face.forEach(function(face) {
     var position = generate_position(
-      xtend(face, pick(faces, 'img_width', 'img_height'))
+      xtend(face, image_size)
     );
     var pug = document.createElement('img');
     var roll = face.attribute.pose.roll_angle.value;
@@ -40,11 +45,11 @@ function place_pug(img, faces) {
     pug.style.top = position.top;
     pug.style.left = position.left;
     pug.style.transform = 'rotate('+roll+'deg)';
-    pug.src = '/pug-face.png';
+    pug.src = 'https://s3.amazonaws.com/pug-face/pug-face.png';
 
     div.appendChild(pug);
   });
-  document.body.appendChild(div);
+  container.appendChild(div);
 }
 
 function get_faces(img_url, cb) {
@@ -67,13 +72,23 @@ function get_faces(img_url, cb) {
     else {
       var body = buff.toString();
       var faces = JSON.parse(body);
-      cb(null, faces);
+      if(faces.error) {
+        cb(faces);
+      }
+      else {
+        cb(null, faces);
+      }
     }
   }));
 }
 
-console.log('bam')
-var images = to_array(document.images);
+function get_images() {
+  var image = document.getElementById('fbPhotoImage');
+  return image ? [image] : to_array(document.images);
+}
+
+console.log('pugifying')
+var images = get_images();
 
 images.forEach(function(image) {
   get_faces(image.src, function(err, faces) {
